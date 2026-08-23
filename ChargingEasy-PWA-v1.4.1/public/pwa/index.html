@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F7F7F8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="充電易" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content="记录电动车充电、高速和停车费用，并查看月度与年度汇总。" />
+    <title>充電易</title>
+    <script>
+      window.__chargingEasyLaunchStartedAt = performance.now();
+      try {
+        const savedTheme = localStorage.getItem("charging-easy-theme");
+        const initialTheme = ["light", "dark"].includes(savedTheme) ? savedTheme : "system";
+        document.documentElement.dataset.theme = initialTheme;
+        const startsDark = initialTheme === "dark" || (initialTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", startsDark ? "#000000" : "#F7F7F8");
+      } catch (_error) {
+        document.documentElement.dataset.theme = "system";
+      }
+    </script>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-1206x2622.png" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="./startup/apple-launch-1320x2868.png" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+    <link rel="icon" href="./icons/icon-192.png" />
+    <link rel="preload" as="image" href="./icons/icon-192.png" />
+    <style>
+      #app-launch-screen {
+        align-items: center;
+        background: #ffffff;
+        color: #111114;
+        display: flex;
+        inset: 0;
+        justify-content: center;
+        opacity: 1;
+        position: fixed;
+        transition: opacity 300ms cubic-bezier(0.22, 0.74, 0.2, 1);
+        z-index: 1000;
+      }
+      #app-launch-screen.is-hiding { opacity: 0; pointer-events: none; }
+      .app-launch-brand { align-items: center; display: flex; gap: 16px; }
+      .app-launch-brand img { border-radius: 24%; display: block; height: 68px; width: 68px; }
+      .app-launch-brand strong {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+      }
+      @media (prefers-reduced-motion: reduce) { #app-launch-screen { transition-duration: 1ms; } }
+    </style>
+    <link rel="stylesheet" href="./styles.css?v=1.4.1" />
+    <script defer src="./cloud.js"></script>
+    <script defer src="./app.js?v=1.4.1"></script>
+  </head>
+  <body>
+    <div id="app-launch-screen" role="status" aria-label="正在打开充電易">
+      <div class="app-launch-brand"><img src="./icons/icon-192.png" alt="" /><strong>充電易</strong></div>
+    </div>
+    <script>
+      window.requestAnimationFrame(() => {
+        window.__chargingEasyLaunchPaintedAt = performance.now();
+      });
+    </script>
+    <div class="app-shell" id="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="page-eyebrow">2026年8月</p>
+          <h1 id="page-title">充電易</h1>
+        </div>
+        <button class="account-button" id="account-button" type="button" aria-label="账户与云端同步" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.25" /><path d="M5.5 20a6.5 6.5 0 0 1 13 0" /></svg>
+          <span class="account-status-dot" aria-hidden="true"></span>
+        </button>
+      </header>
+
+      <main id="page" class="page" aria-live="polite"></main>
+
+      <nav class="tabbar" aria-label="主导航">
+        <button class="tab is-active" data-route="home" aria-label="首页">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z" /></svg>
+          <span>首页</span>
+        </button>
+        <button class="tab" data-route="records" aria-label="记录">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10M7 9h10M7 14h7M5 21h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2Z" /></svg>
+          <span>记录</span>
+        </button>
+        <button class="tab" data-route="add" aria-label="添加">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" /><path d="M12 8v8M8 12h8" /></svg>
+          <span>添加</span>
+        </button>
+        <button class="tab" data-route="statistics" aria-label="统计">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-7h3v7H5Zm6 0V4h3v16h-3Zm6 0V9h3v11h-3Z" /></svg>
+          <span>统计</span>
+        </button>
+        <button class="tab" data-route="settings" aria-label="设置">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h5M15 6h5M4 12h9M19 12h1M4 18h2M12 18h8" /><circle cx="12" cy="6" r="2.25" /><circle cx="16" cy="12" r="2.25" /><circle cx="9" cy="18" r="2.25" /></svg>
+          <span>设置</span>
+        </button>
+      </nav>
+    </div>
+
+    <div id="modal-root"></div>
+    <div class="toast" id="toast" role="status"></div>
+    <noscript>请启用 JavaScript 后使用充電易。</noscript>
+  </body>
+</html>
