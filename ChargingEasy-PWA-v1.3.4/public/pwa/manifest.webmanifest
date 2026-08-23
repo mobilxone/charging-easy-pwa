@@ -1,0 +1,21 @@
+{
+  "id": "/pwa/index.html",
+  "name": "充電易",
+  "short_name": "充電易",
+  "description": "记录电动车充电、高速和停车费用，并查看月度与年度汇总。",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "/pwa/index.html",
+  "scope": "/pwa/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#F7F7F8",
+  "theme_color": "#F7F7F8",
+  "categories": ["utilities", "finance", "productivity"],
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
