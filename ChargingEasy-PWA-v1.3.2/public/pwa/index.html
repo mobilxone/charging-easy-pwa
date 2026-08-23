@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F7F7F8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="充電易" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content="记录电动车充电、高速和停车费用，并查看月度与年度汇总。" />
+    <title>充電易</title>
+    <script>
+      try {
+        const savedTheme = localStorage.getItem("charging-easy-theme");
+        const initialTheme = ["light", "dark"].includes(savedTheme) ? savedTheme : "system";
+        document.documentElement.dataset.theme = initialTheme;
+        const startsDark = initialTheme === "dark" || (initialTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", startsDark ? "#000000" : "#F7F7F8");
+      } catch (_error) {
+        document.documentElement.dataset.theme = "system";
+      }
+    </script>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="icon" href="./icons/icon-192.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./cloud.js"></script>
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell" id="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="page-eyebrow">2026年8月</p>
+          <h1 id="page-title">充電易</h1>
+        </div>
+        <button class="account-button" id="account-button" type="button" aria-label="账户与云端同步" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.25" /><path d="M5.5 20a6.5 6.5 0 0 1 13 0" /></svg>
+          <span class="account-status-dot" aria-hidden="true"></span>
+        </button>
+      </header>
+
+      <main id="page" class="page" aria-live="polite"></main>
+
+      <nav class="tabbar" aria-label="主导航">
+        <button class="tab is-active" data-route="home" aria-label="首页">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z" /></svg>
+          <span>首页</span>
+        </button>
+        <button class="tab" data-route="records" aria-label="记录">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10M7 9h10M7 14h7M5 21h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2Z" /></svg>
+          <span>记录</span>
+        </button>
+        <button class="tab" data-route="add" aria-label="添加">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3" /><path d="M12 8v8M8 12h8" /></svg>
+          <span>添加</span>
+        </button>
+        <button class="tab" data-route="statistics" aria-label="统计">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-7h3v7H5Zm6 0V4h3v16h-3Zm6 0V9h3v11h-3Z" /></svg>
+          <span>统计</span>
+        </button>
+        <button class="tab" data-route="settings" aria-label="设置">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h5M15 6h5M4 12h9M19 12h1M4 18h2M12 18h8" /><circle cx="12" cy="6" r="2.25" /><circle cx="16" cy="12" r="2.25" /><circle cx="9" cy="18" r="2.25" /></svg>
+          <span>设置</span>
+        </button>
+      </nav>
+    </div>
+
+    <div id="modal-root"></div>
+    <div class="toast" id="toast" role="status"></div>
+    <noscript>请启用 JavaScript 后使用充電易。</noscript>
+  </body>
+</html>
